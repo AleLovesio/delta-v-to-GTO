@@ -45,7 +45,7 @@ void Orbit::print() const {
          << _perigee/1000 << " km x "
          << _apogee/1000 << " km x "
          << _inclination << " degrees; " << endl
-         << "Apogee Speed:" << getOrbitalSpeed(_apogee)
+         << "Apogee Speed: " << getOrbitalSpeed(_apogee)
          << " m/s; Perigee Speed: " << getOrbitalSpeed(_perigee)
          << " m/s; delta v to this orbit: " << getTotalDeltaVChange() << endl << endl;
 }
