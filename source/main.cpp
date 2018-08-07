@@ -51,7 +51,7 @@ int main() {
             cout << endl;
             //Increase Perigee altitude to GEO altitude and bring inclination to 0
             orbit.perigeeChange(GEO_ALT_M,0);
-            cout << "First maneuver: " << endl;
+            cout << "Second maneuver: " << endl;
             cout << setprecision(4) << fixed << "Perigee changed to " << GEO_ALT_KM << "km" << endl;
             cout << setprecision(4) << fixed << "Inclination changed to " << 0 << " degrees" << endl;
             orbit.print();
