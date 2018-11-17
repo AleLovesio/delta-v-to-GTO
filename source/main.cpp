@@ -94,7 +94,7 @@ int main() {
             orbit.apogeeChange(GEO_ALT_M,0); //Bringing the apogee back to GEO and completing the inclination zeroing
             cout << "Second maneuver: " << endl;
             cout << setprecision(4) << fixed << "Apogee changed to " << GEO_ALT_KM << "km" <<endl;
-            cout << setprecision(4) << fixed << "Inclination changed to " << best_profile << " degrees" <<endl;
+            cout << setprecision(4) << fixed << "Inclination changed to " << 0 < " degrees" <<endl;
             orbit.print();
             cout << endl;
         }
