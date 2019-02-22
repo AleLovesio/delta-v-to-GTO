@@ -19,7 +19,7 @@ int main() {
         double perigee, apogee, inclination;
         cout << "Enter Perigee in km, Apogee in km, Inclination in degrees." << endl;
         cin >> perigee >> apogee >> inclination;
-        perigee=perigee*1000; //Covert to m
+        perigee=perigee*1000; //Convert to m
         apogee=apogee*1000;//Convert to m
         Orbit orbit(perigee, apogee,inclination); //Initial orbit creation
         orbit.print(); //Prints current orbit data
