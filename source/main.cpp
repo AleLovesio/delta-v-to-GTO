@@ -12,14 +12,55 @@
 
 using namespace std;
 
-int main() {
-    int stay;
+int main(int argc, char* argv[]) {
+    int interactive_mode, stay;
+    double perigee, apogee, inclination;
+
+    if (argc <= 1) {
+        interactive_mode = 1; // No arguments passed, prompt the user for orbital parameters
+    } else {
+        int orbital_parameter_parsed = 0;
+
+        // Attempt to figure out the orbital parameters from the arguments
+        if (argc == 4) {
+            int argument_index = 0;
+            try {
+                argument_index = 1;
+                perigee = std::stof(argv[argument_index]);
+                argument_index = 2;
+                apogee = std::stof(argv[argument_index]);
+                argument_index = 3;
+                inclination = std::stof(argv[argument_index]);
+                orbital_parameter_parsed = 1;
+            } catch (const std::exception & ex) {
+                // float parsing raised an exception, warn the user
+                cerr << "Error: Unable to parse argument " << argument_index << " (value: '" << argv[argument_index] << "', error: " << ex.what() << ")" << endl;
+            }
+        }
+
+        if (orbital_parameter_parsed) {
+            interactive_mode = 0; // Orbital parameters provided, no need for prompting
+        } else {
+            // Invalid arguments were provided, warn the user and exit
+            cout << "Usage:" << endl;
+            cout << "\t" << argv[0] << endl;
+            cout << "\t\t" << "Interactive mode, prompt user for orbital parameters." << endl;
+            cout << "Usage:" << endl;
+            cout << "\t" << argv[0] << " perigee apogee inclination" << endl;
+            cout << "\t\t" << "Non-interactive mode, parse orbital parameters from arguments (km km deg)." << endl;
+            exit(1);
+        }
+    }
+
     do {
         stay=0;
-        double perigee, apogee, inclination;
-        cout << "Enter Perigee in km, Apogee in km, Inclination in degrees." << endl;
-        cin >> perigee >> apogee >> inclination;
-        perigee=perigee*1000; //Covert to m
+
+        if (interactive_mode == 1) {
+            cout << "Enter Perigee in km, Apogee in km, Inclination in degrees." << endl;
+            cin >> perigee >> apogee >> inclination;
+        }
+
+        perigee=perigee*1000; //Convert to m
         apogee=apogee*1000;//Convert to m
         Orbit orbit(perigee, apogee,inclination); //Initial orbit creation
         orbit.print(); //Prints current orbit data
@@ -94,16 +135,18 @@ int main() {
             orbit.apogeeChange(GEO_ALT_M,0); //Bringing the apogee back to GEO and completing the inclination zeroing
             cout << "Second maneuver: " << endl;
             cout << setprecision(4) << fixed << "Apogee changed to " << GEO_ALT_KM << "km" <<endl;
-            cout << setprecision(4) << fixed << "Inclination changed to " << 0 < " degrees" <<endl;
+            cout << setprecision(4) << fixed << "Inclination changed to " << 0 << " degrees" <<endl;
             orbit.print();
             cout << endl;
         }
 
         cout << setprecision(4) << fixed << "Total delta v to GEO: " << orbit.getTotalDeltaVChange() << " m/s" << endl << endl;
 
-        cout << "Enter 1 to restart or any other key to close." << endl;
-        cin >> stay;
-        cout << endl << endl << endl;
+        if (interactive_mode == 1) {
+            cout << "Enter 1 to restart or any other key to close." << endl;
+            cin >> stay;
+            cout << endl << endl << endl;
+        }
     }while(stay==1);
     return 0;
 }
